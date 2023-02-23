@@ -30,6 +30,9 @@ app.use(middleware())
 /** Returns 401 to the client in the case of session related errors */
 app.use(errorHandler())
 
+/** An example route that does not require session verification */
+app.get('/ping', async (_req, res) => res.json({ message: 'pong' }))
+
 /** Login route with custom verification logic */
 app.post('/login', async (req, res) => {
 
@@ -50,7 +53,7 @@ app.post('/login', async (req, res) => {
     res.json({ message: `User with address ${userAddress} signed in.` })
 })
 
-/** An example API that requires session verification */
+/** An example route that requires session verification */
 app.get('/user', verifySession(), async (req: SessionRequest, res) => {
 
     const userAddress = req.session?.getUserId()
@@ -60,7 +63,7 @@ app.get('/user', verifySession(), async (req: SessionRequest, res) => {
      * then... 
      */
 
-    res.send({
+    res.json({
         address: userAddress,
         accounts: [{
             address: userAddress,

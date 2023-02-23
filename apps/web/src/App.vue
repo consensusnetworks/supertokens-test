@@ -6,6 +6,14 @@ let session = ref(false)
 let userAddress = ref('')
 
 /**
+ * Ping the server
+ */
+async function ping() {
+  const ping = await fetch('http://localhost:4000/ping')
+  console.log(await ping.json())
+}
+
+/**
  * Get current user
  */
 async function getUser() {
@@ -48,6 +56,7 @@ async function signOut() {
  * Get current user or prompt wallet auth
  */
 onMounted(async () => {
+  await ping()
   await getUser()
 })
 </script>
