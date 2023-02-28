@@ -5,6 +5,7 @@ import Session from 'supertokens-node/recipe/session'
 import { verifySession } from 'supertokens-node/recipe/session/framework/express'
 import { middleware, errorHandler, SessionRequest } from 'supertokens-node/framework/express'
 import { SuperTokensConfig } from './config'
+import user from './routes/user'
 
 supertokens.init(SuperTokensConfig)
 
@@ -54,6 +55,7 @@ app.post('/login', async (req, res) => {
 })
 
 /** An example route that requires session verification */
+app.get('/user', user)
 app.get('/user', verifySession(), async (req: SessionRequest, res) => {
 
     const userAddress = req.session?.getUserId()
